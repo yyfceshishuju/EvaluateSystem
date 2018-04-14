@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.UserDAO">
+			<resultMap type="Teacher" id="teacherResult">
+				<result property="id" column="id"/>
+				<result property="teacherName" column="teacher_name"/>
+		</resultMap>
+		
+		
+		
+		<resultMap type="User" id="userResult">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="password" column="password"/>
+			<result property="passwordQuestion" column="password_question"/>
+			<result property="passwordAnswer" column="password_answer"/>
+			<result property="createDate" column="create_date"/>
+			<result property="clazz" column="clazz"/>
+			<result property="statu" column="statu"/>
+			<result property="ip" column="ip"/>
+			<collection property="evaluates" javaType="ArrayList" column="id" select="com.zpark.dao.EvaluateDetailDAO.queryEvaluateDetailByUserId">
+			</collection>
+			
+			
+		</resultMap>
+		
+		
+		
+		<resultMap type="Evaluate" id="evaluateResult">
+			<id property="id" column="id"/>
+			<result property="subject" column="subject"/>
+			<result property="clazzCount" column="clazz_count"/>
+			<result property="realCount" column="real_count"/>
+			<result property="totalScore" column="total_score"/>
+			<result property="scoreDetail" column="score_detail"/>
+			<result property="createDate" column="create_date"/>
+			<result property="endDate" column="end_date"/>
+			<result property="commendDetail" column="commend_detail"/>
+			<result property="clazz" column="clazz"/>
+			<result property="beginDate" column="begin_date"/>
+			<result property="statu" column="statu"/>
+			<result property="templateId" column="template_id"/>
+			<association property="teacher" javaType="Teacher" column="teacher_id" select="com.zpark.dao.TeacherDAO.queryTeacherById">
+			</association>
+		</resultMap>
+		
+		
+		<resultMap type="ZJEvaluate" id="zjevaluateResult">
+			<id property="id" column="id"/>
+			<result property="subject" column="subject"/>
+			<result property="clazzCount" column="clazz_count"/>
+			<result property="realCount" column="real_count"/>
+			<result property="totalScore" column="total_score"/>
+			<result property="scoreDetail" column="score_detail"/>
+			<result property="createDate" column="create_date"/>
+			<result property="endDate" column="end_date"/>
+			<result property="commendDetail" column="commend_detail"/>
+			<result property="clazz" column="clazz"/>
+			<result property="beginDate" column="begin_date"/>
+			<result property="statu" column="statu"/>
+			<result property="zjTemplateId" column="template_zj_id"/>
+			<association property="assistant" javaType="Assistant" column="assistant_id" select="com.zpark.dao.AssistantDAO.queryAssistantById">
+			</association>
+		</resultMap>
+		
+		
+		
+		
+		
+  <select id="queryUserByUsername" resultType="User" resultMap="userResult">
+  	SELECT id,name,password,password_question,password_answer,create_date,clazz,statu,ip FROM t_user
+  		WHERE name=#{userName}
+  		
+  
+  </select>
+  <insert id="saveUser" parameterType="User">
+    INSERT INTO t_user
+       (id,name,password,password_question,password_answer,create_date,clazz,statu,ip)
+    VALUES
+       (t_user_seq.nextval,#{name},#{password},#{passwordQuestion},#{passwordAnswer},sysdate,#{clazz},'Y',#{ip})
+  </insert>
+  
+  <select id="queryUserByPasswordQuestion" resultType="User" resultMap="userResult">
+  	SELECT id,name,password,password_question,password_answer,create_date,clazz,statu ip FROM t_user
+  		WHERE password_question=#{passwordQuestion}
+  </select>
+  																				   
+   <select id="queryEvaluateByCreateDateAndCalzz" resultType="Evaluate" resultMap="evaluateResult">
+  	SELECT id,subject,clazz_count,teacher_id,total_score,score_detail,create_date,end_date,template_id,commend_detail,admin_id,clazz,begin_date,statu FROM t_evaluate
+ 		WHERE to_char(begin_date,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') AND clazz=#{clazz}
+  </select>
+  
+  <select id="queryUserById" resultMap="userResult" resultType="User">
+  SELECT id,name,password,password_question,password_answer,create_date,clazz,statu ,ip FROM t_user
+  		WHERE id=#{id}
+  </select>
+  
+   <select id="queryUserByIp" resultType="User" resultMap="userResult">
+  	SELECT id,name,password,password_question,password_answer,create_date,clazz,statu,ip FROM t_user
+ 		WHERE ip=#{ip}
+  </select>
+  <select id="queryEvaluateZJByCreateDateAndCalzz" resultType="ZJEvaluate" resultMap="zjevaluateResult">
+  	SELECT id,subject,clazz_count,assistant_id,total_score,score_detail,create_date,end_date,template_zj_id,commend_detail,admin_id,clazz,begin_date,statu FROM t_evaluate_zj
+ 		WHERE to_char(begin_date,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd') AND clazz=#{clazz}
+  </select>
+  
+</mapper>

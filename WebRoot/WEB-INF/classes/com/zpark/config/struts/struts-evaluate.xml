@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd"><struts>
+   <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+  
+   <!-- 教师测评的action -->
+	<package name="evaluate" extends="easyUI" namespace="/evaluate">
+		<action name="evaluate_*" class="evaluateAction" method="{1}">
+			<result name="showOk" type="easyUI">
+				<param name="property">evaluateList</param>
+			</result>
+			<result name="createEvaluateOk">/bk/error.jsp</result>
+			<result name="showEvaluateItemOk">/bk/evaluateItem.jsp</result>
+			<result name="showEvaluateDetailOk">/bk/evaluateDetail.jsp</result>
+						  
+			<result name="showEvaluateDetailsOk" type="easyUI">
+				<param name="property">evaluateDetails</param>
+			</result>
+			<result name="removeEvalauteOk" type="redirect">/bk/evaluateList.jsp
+			</result>
+			<result name="showAllTemplateOk">/bk/createEvaluate.jsp</result>
+			<result name="modifyOkEvalaute">
+				/bk/error.jsp
+			</result>
+			<result name="showByConditionOk" type="easyUI">
+				<param name="property">evaluateList</param>
+			</result>
+			<result name="createEvaluateResultOk" type="redirect">/bk/evaluateList.jsp
+			</result>
+			<result name="showScoreDetailOk">
+				/bk/scoreDetail.jsp
+			</result>
+			<result name="showCommendDetailOk">
+				/bk/commendDetail.jsp
+			</result>
+			<result name="simpleJsp">
+				/bk/evaluateDetails.jsp
+			</result>
+			<result name="error">/bk/error.jsp</result>
+			<result name="systemError" type="redirect">/bk/systemError.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 助教测评的action -->
+	<package name="evaluateAssistant" extends="easyUI" namespace="/evaluateZj">
+		<action name="evaluateZj_*" class="evaluateZjAction" method="{1}">
+		<result name="showOk" type="easyUI">
+				<param name="property">evaluateList</param>
+			</result>
+			<result name="createEvaluateOk">/bk/errorZj.jsp</result>
+			<result name="showEvaluateItemOk">/bk/evaluateItemZj.jsp</result>
+			<result name="showEvaluateDetailOk">/bk/evaluateDetailZj.jsp</result>
+						  
+			<result name="showEvaluateDetailsOk" type="easyUI">
+				<param name="property">evaluateDetails</param>
+			</result>
+			<result name="removeEvalauteOk" type="redirect">/bk/evaluateListZj.jsp
+			</result>
+			<result name="showAllTemplateOk">/bk/createEvaluateZj.jsp</result>
+			<result name="modifyOkEvalaute">/bk/errorZj.jsp</result>
+			<result name="showByConditionOk" type="easyUI">
+				<param name="property">evaluateList</param>
+			</result>
+			<result name="createEvaluateResultOk" type="redirect">/bk/evaluateListZj.jsp
+			</result>
+			<result name="showScoreDetailOk">
+				/bk/scoreDetailZj.jsp
+			</result>
+			<result name="showCommendDetailOk">
+				/bk/commendDetailZj.jsp
+			</result>
+			<result name="simpleJsp">
+				/bk/evaluateDetailsZj.jsp
+			</result>
+			<result name="error">/bk/errorZj.jsp</result>
+		</action>
+	</package>
+	
+	
+	<!-- 数据下载 -->
+	<package name="download" extends="easyUI" namespace="/exportData">
+		<!-- 下载教师测评信息 -->
+		<action name="exportTeacher" class="exportEvaluateAction">
+	       <result name="success" type="excel"></result>
+	       <result name="error">/bk/exportError.jsp</result>
+	    </action>
+    	<!-- 下载助教测评信息 -->
+	    <action name="exportAssistant" class="exportEvaluateZjAction">
+	       <result name="success" type="excel"></result>
+	       <result name="error">/bk/exportError.jsp</result>
+	    </action>
+		
+		<!--下载教师测评详细信息-->
+		<action name="exportEvaluateDetail" class="exportEvaluateDetailAction">
+			<result name="success" type="excel"></result>	
+			<result name="error">/bk/exportError.jsp</result>
+		</action>
+		<!-- 下载助教测评详细信息 -->
+		<action name="exportEvaluateDetailZJ" class="exportEvaluateDetailZJAction">
+			<result name="success" type="excel"></result>	
+			<result name="error">/bk/exportError.jsp</result>
+		</action>
+		<!-- 下载用户数据 -->
+		<action name="exportUser" class="exportUserAction">
+			<result name="success" type="excel"></result>
+			<result name="error">/bk/exportError.jsp</result>
+		</action>
+		
+		<action name="exportEvaluateDetailById" class="exportEvaluateByIdAction">
+			<result name="success" type="excel"></result>
+			<result name="error">/bk/exportError.jsp</result>
+		</action>
+		<action name="exportEvaluateDetailZJById" class="exportEvaluateZJByIdAction">
+			<result name="success" type="excel"></result>
+			<result name="error">/bk/exportError.jsp</result>
+		</action>
+		
+     </package>
+     
+     <!-- 数据上传 -->
+     <package name="upload" extends="struts-default" namespace="/importData">
+     	<action name="importUsers" class="importUserAction">
+     		<result name="success">/bk/importOk.jsp</result>
+     		<result name="error">/bk/importError.jsp</result>
+     	</action>
+     	<action name="importTeachers" class="importTeacherAction">
+     		<result name="success">/bk/importOk.jsp</result>
+     		<result name="error">/bk/importError.jsp</result>
+     	</action>
+     	<action name="importAssistants" class="importAssistantAction">
+     		<result name="success">/bk/importOk.jsp</result>
+     		<result name="error">/bk/importError.jsp</result>
+     	</action>
+     </package>
+     
+     <package name="sendEmail" extends="struts-default" namespace="/sendEmail">
+     	<action name="evaluate_*" class="sendEmailAction" method="{1}">
+     		<result name="success">/bk/sendOk.jsp</result>
+     		<result name="error">/bk/sendError.jsp</result>
+     	</action>
+
+     </package>
+</struts>    

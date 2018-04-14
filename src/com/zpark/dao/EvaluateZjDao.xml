@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.EvaluateZjDao">
+	<resultMap type="ZJEvaluate" id="zjEvaluateResult">
+		<id property="id"/>
+		<result property="id" column="id"/>
+		<result property="subject"/>
+		<result property="clazzCount" column="clazz_count"/>
+		<result property="realCount" column="real_count"/>
+		<result property="totalScore" column="total_score"/>
+		<result property="scoreDetail" column="score_detail"/>
+		<result property="createDate" column="create_date" javaType="Date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="commendDetail" column="commend_detail"/>
+		<result property="clazz"/>
+		<result property="beginDate" column="begin_date"/>
+		<result property="statu"/>
+		<association property="admin" javaType="Admin" column="admin_id" select="com.zpark.dao.EvaluateZjDao.queryAdminById"></association>
+		<association property="assistant" javaType="Assistant" column="assistant_id" select="com.zpark.dao.EvaluateZjDao.queryAssistantById"></association>
+		<association property="zjTemplate" javaType="ZjTemplate" column="template_zj_id" select="com.zpark.dao.EvaluateZjDao.queryTemplateById"></association>
+	</resultMap> 
+	<resultMap type="ZJEvaluateItem" id="zjEvaluateItemResult">
+		<id property="id" />
+		<result property="itemName" column="item_name" />
+		<result property="itemScore" column="item_score" />
+		<result property="itemCategory" column="item_category" />
+		<result property="createDate" column="create_date" />
+		<result property="statu" column="statu" />
+	</resultMap>
+	
+	<resultMap type="Admin" id="adminResult">
+		<id property="id"/>
+		<result property="id" column="id"/>
+	</resultMap>
+	<resultMap type="Assistant" id="assistantResult">
+		<id property="id"/>
+		<result property="id" column="id"/>
+		<result property="assistantName" column="assistant_name"/>
+	</resultMap>
+	<resultMap type="ZJTemplate" id="zjTemplateResult">
+		<id property="id"/>
+		<result property="id" column="id"/>
+		<result property="templateName" column="template_name"/>
+	</resultMap>
+	<resultMap type="ZJEvaluateDetail" id="zjEvaluateDetailResult">
+		<id property="id"/>
+		<result property="id" column="id"/>
+		<result property="scoreDetail" column="score_detail"/>
+		<result property="commendDetail" column="commend_detail"/>
+		<result property="totalScore" column="total_score"/>
+		<result property="createDate" column="create_date"/>
+		<association property="user" javaType="User" column="user_id" select="com.zpark.dao.EvaluateZjDao.queryUserById">
+		</association>
+		<association property="zjevaluate" javaType="ZjEvaluate" column="evaluate_zj_id" select="com.zpark.dao.EvaluateZjDao.queryEvaluateDetailByEvaluateId">
+		</association>
+	</resultMap>
+	
+	<resultMap type="User" id="userResult">
+		<id property="id"/>
+		<result property="id" column="id"/>
+		<result property="name"/>
+	</resultMap>
+	
+	<select id="queryAdminById" parameterType="int" resultMap="adminResult">
+		select * 
+		from t_admin
+		where id = #{id}
+	</select>
+	<select id="queryAssistantById" parameterType="int" resultMap="assistantResult">
+		select * 
+		from t_assistant
+		where id = #{id}
+	</select>
+	<select id="queryTemplateById" parameterType="int" resultMap="zjTemplateResult">
+		select *
+		from t_template_zj
+		where id = #{id}
+	</select>
+	<select id="queryUserById" parameterType="int" resultMap="userResult">
+		select id, name
+		from t_user
+		where id = #{id}
+	</select>
+	
+	<select id="queryAllEvaluate" resultMap="zjEvaluateResult" parameterType="SearchBean">
+		select * from (select t.*,rownum r from t_evaluate_zj t order by t.begin_date) where r &gt;= #{page} and r &lt;=#{rows}
+	</select>
+	
+	<select id="queryEvaluateTotalCount" resultType="int">
+		select count(id) 
+		from t_evaluate_zj
+	</select>
+	<select id="queryEvaluteDetailById" parameterType="int" resultMap="zjEvaluateDetailResult">
+		select * 
+		from t_evaluate_detail_zj
+		where id = #{id}
+	</select>
+	<select id="queryEvaluateDetailByEvaluateId" parameterType="int" resultMap="zjEvaluateResult">
+		
+		select *
+		from t_evaluate_zj
+		where id = #{id} 
+	</select>
+	<update id="updateEvaluate" parameterType="ZjEvaluate">
+		update t_evaluate_zj 
+		set subject = #{subject,jdbcType=VARCHAR},clazz_count=#{clazzCount,jdbcType=NUMERIC},real_count = #{realCount,jdbcType=NUMERIC},
+		create_date = #{createDate,jdbcType=DATE},end_date = #{endDate,jdbcType=DATE},
+		clazz = #{clazz,jdbcType=VARCHAR},begin_date = #{beginDate,jdbcType=DATE},statu = #{statu,jdbcType=VARCHAR}
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteEvaluateById" parameterType="List">
+		delete from t_evaluate_zj
+  		where id in
+  		 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+  		#{item}
+  	</foreach>
+	</delete>
+	
+	<delete id="deleteEvaluateDetailByEvaluateId" parameterType="int">
+		delete from t_evaluate_detail_zj
+		where evaluate_zj_id = #{id}
+	</delete>
+	
+	<insert id="savaEvaluate" parameterType="ZjEvaluate">
+		insert into t_evaluate_zj(id,subject,clazz_count,real_count,assistant_id,total_score,score_detail,create_date,end_date,template_zj_id,commend_detail,admin_id,clazz,begin_date,statu)
+		values(t_evaluate_zj_seq.nextval,#{subject,jdbcType=VARCHAR},#{clazzCount,jdbcType=VARCHAR},#{realCount,jdbcType=NUMERIC},#{assistant.id,jdbcType=NUMERIC},
+		#{totalScore,jdbcType=NUMERIC},#{scoreDetail,jdbcType=VARCHAR},#{createDate,jdbcType=DATE},#{endDate,jdbcType=DATE},#{zjTemplate.id,jdbcType=NUMERIC},
+		#{commendDetail,jdbcType=VARCHAR},#{admin.id,jdbcType=NUMERIC},#{clazz,jdbcType=VARCHAR},#{beginDate,jdbcType=DATE},#{statu,jdbcType=VARCHAR})
+	</insert>
+	<select id="queryAllTempalate" resultMap="zjTemplateResult">
+		select *
+		from t_template_zj
+		where statu = 'y' order by is_default desc
+	</select>
+	
+	
+	
+	<select id="queryAllEvaluateDetailBySearchBean" resultMap="zjEvaluateDetailResult" parameterType="SearchBean">
+	select * from (select t.*,rownum r from t_evaluate_detail_zj t where t.evaluate_zj_id = #{id}) where r &gt;= #{page} and r &lt;=#{rows}
+	</select>
+	
+	<select id="queryAllEvaluateDetailByEvaluateId" resultMap="zjEvaluateDetailResult" parameterType="int">
+		select *
+		from t_evaluate_detail_zj
+		where evaluate_zj_id = #{id}
+	</select>
+	<select id="queryTotalCountEvaluateDetailByEvaluateId" resultType="int" parameterType="int">
+		select count(*)
+		from t_evaluate_detail_zj
+		where evaluate_zj_id = #{id}
+	</select>
+	<!--
+	
+	<select id="queryCommendDetailByEvaluateId" parameterType="int" resultMap="evaluateDetailResult" >
+		select commend_detail,score_detail 
+		from t_evaluate_detail
+		where evaluate_id = #{id}
+	</select>
+	--><select id="queryAllAssistant" resultMap="assistantResult" >
+		select * 
+		from t_assistant
+	</select>
+	
+	<select id="queryEvaluateByTeacherName" parameterType="SearchBean" resultMap="zjEvaluateResult">
+		select t.* from 
+			(select te.*,rownum r from t_evaluate_zj te left join t_assistant tt on te.assistant_id = tt.id
+			where tt.assistant_name like '%'||#{content}||'%') t
+		 where r &gt;= #{page} and r &lt;=#{rows}
+	
+	</select>
+	<select id="queryTotalCountByTeacherName" parameterType="SearchBean" resultType="int">
+		select count(*) from 
+		t_evaluate_zj te left join t_assistant tt
+		on te.assistant_id = tt.id
+		where tt.assistant_name like '%'||#{content}||'%'
+	</select>
+	<select id="queryEvaluateBySubject" parameterType="SearchBean" resultMap="zjEvaluateResult">
+		select t.* from 
+			(select te.*,rownum r from t_evaluate_zj te where subject  LIKE '%'||#{content}||'%')t
+		where r &gt;= #{page} and r &lt;=#{rows}
+	</select>
+	<select id="queryTotalCountBySubject" parameterType="SearchBean" resultType="int">
+		select count(*)
+		 from t_evaluate_zj
+		where subject  LIKE '%'||#{content}||'%'
+		order by begin_date
+	</select>
+	<select id="queryEvaluateByEvalauteDate" parameterType="SearchBean" resultMap="zjEvaluateResult">
+		select t.* from 
+			(select te.*,rownum r from t_evaluate_zj te where begin_date between #{beginDate} and #{endDate}) t
+		 where r &gt;= #{page} and r &lt;=#{rows}
+	</select>
+	<select id="queryTotalCountByEvaluateDate" parameterType="SearchBean" resultType="int">
+		select count(*)
+		from t_evaluate_zj
+		where begin_date between #{beginDate} and #{endDate}
+	</select>
+	<select id="queryEvaluateByStudentName" parameterType="SearchBean" resultMap="zjEvaluateResult">
+			select t.* from 
+				(select te.*,rownum r from t_user  tu left join t_evaluate_detail_zj ted on tu.id = ted.user_id
+				left join t_evaluate_zj te on ted.evaluate_zj_id = te.id
+				where tu.name like '%'||#{content}||'%') t 
+			where r &gt;= #{page} and r &lt;=#{rows}
+	</select>
+	<select id="queryTotalCountByStudentName" parameterType="SearchBean" resultType="int">
+		select count(*) from
+		t_user  tu left join t_evaluate_detail_zj ted on tu.id = ted.user_id
+		left join t_evaluate_zj te on ted.evaluate_zj_id = te.id
+		where tu.name like '%'||#{content}||'%'
+	</select>
+	
+	<select id="queryAverageTotalScore" parameterType="int" resultType="double">
+		select avg(total_score) from t_evaluate_detail_zj where evaluate_zj_id = #{id}
+	</select>
+	<update id="updateEvaluateTotalScoreAndCommendDetail" parameterType="ZjEvaluate">
+		update t_evaluate_zj 
+		set total_score=#{totalScore,jdbcType=NUMERIC},
+		commend_detail = #{commendDetail,jdbcType=VARCHAR},
+		score_detail = #{scoreDetail,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	 
+	<select id="queryEvaluateItemByTemplateId" parameterType="int" resultMap="zjEvaluateItemResult">
+		select te.* from t_evaluate_item_zj  te left join t_template_item_zj tt on te.id= tt.evaluate_item_zj_id
+		where tt.template_zj_id = #{id}	
+	</select>
+
+	<select id="queryEvaluateByTemplateId" parameterType="int" resultMap="zjEvaluateResult">
+		select * 
+		from t_evaluate_zj
+		where template_zj_id = #{id}
+	</select>
+	
+	<select id="queryEvaluateByDateAndClazz" parameterType="ZjEvaluate" resultMap="zjEvaluateResult">
+		select *
+		from t_evaluate_zj 
+		where clazz = #{clazz,jdbcType=NUMERIC} and begin_date = #{beginDate,jdbcType=DATE}
+	</select>
+</mapper>

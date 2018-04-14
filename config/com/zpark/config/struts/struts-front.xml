@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd"><struts>
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+       <!-- 前台用户管理  -->
+       <package name="userFront" extends="struts-default" namespace="/front">
+       		<action name="*FrontUserAction" class="frontUserAction" method="{1}">
+       				 <result name="findSeccess">/front/showUser.jsp</result>
+       				  <result name="showSeccess">/front/showUser.jsp</result>
+       				 <result name="registerSuccess" type="redirect">/front/registrationSuccess.jsp</result>
+       				<result name="showUserByCreateDateAndClazz" type="chain">
+       					<param name="namespace">/front</param>
+       					<param name="actionName">showUserByCreateDateAndClazzFrontEvaluateTeacherAction</param>
+       				</result>
+       				<!-- exception -->
+       				<result name="PasswordQuestionAndPasswordAnswerException">/front/getPassword.jsp</result>
+       				<result name="UserNameAndQuestionRepeat">/front/registration.jsp</result>
+       				<result name="UserNameAndPasswordException">/front/login.jsp</result>
+       				  <result name="error" type="redirect">/front/login.jsp</result>
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+       		</action>
+       </package>
+       <!-- 教师测评管理 -->
+		<package name="evaluateTeacher" extends="struts-default" namespace="/front">
+			<action name="*FrontEvaluateTeacherAction" class="frontEvaluateTeacherAction" method="{1}">
+				<result name="createEvaluateSeccess">/front/evaluateSuccess.jsp</result>
+				<result name="queryTeacherEvaluateSeccess">/front/evaluateTable.jsp</result> 
+				<!-- exception -->
+				 <result name="RepeatSubmitException">/front/login.jsp</result>
+				 <result name="NotFindTheEvaluationException" type="redirectAction">
+					 <param name="namespace">/front</param>
+					 <param name="actionName">showEvaluateZJByCreateDateAndClazzFrontEvaluateZJAction</param>
+				 </result>
+				 <result name="error" type="redirect">/front/login.jsp</result>
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+			</action>
+		</package>
+
+		<!-- 助教测评管理 -->
+		<package name="evaluateZJ"  extends="struts-default" namespace="/front">
+			<action name="*FrontEvaluateZJAction" class="frontEvaluateZJAction" method="{1}">
+				<result name="queryZJEvaluateSeccess">/front/zjevaluateTable.jsp</result>
+            	<result name="createZJEvaluateSeccess" type="redirect">/front/zjevaluateSuccess.jsp</result>				
+				
+				<!-- exception -->
+				<result name="RepeatSubmitException">/front/login.jsp</result>
+				<result name="NotFindTheEvaluationException">/front/evaluateTable.jsp</result>
+				  <result name="error" type="redirect">/front/login.jsp</result>
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+			</action>	
+		</package>	
+</struts>    

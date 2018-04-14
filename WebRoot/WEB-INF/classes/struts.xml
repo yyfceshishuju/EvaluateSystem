@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="easyUI" extends="struts-default">
+
+		<result-types>
+			<result-type name="easyUI" class="com.zpark.util.EasyUIResult"></result-type>
+			<result-type name="excel" class="com.zpark.util.ExportExcelResult"></result-type>
+		</result-types>
+
+		<interceptors>
+			<interceptor name="pageInterceptor" class="com.zpark.util.PageInterceptor"></interceptor>
+			<interceptor-stack name="pageStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="pageInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="pageStack"></default-interceptor-ref>
+
+	</package>
+
+	<include file="com/zpark/config/struts/struts-front.xml"></include>
+	<include file="com/zpark/config/struts/struts-bkmanager.xml"></include>
+	<include file="com/zpark/config/struts/struts-evaluate.xml"></include>
+	<include file="com/zpark/config/struts/struts-bkyangdd.xml"></include>
+</struts>    

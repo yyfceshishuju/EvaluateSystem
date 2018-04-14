@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <link href="../css/registation.css" rel="stylesheet" />
+	<script type="text/javascript" src="../js/registation.js">
+	
+	</script>
+
+</head>
+<body>
+  <div id="carbonForm">
+    <h1>注册</h1>
+    <form action="/EvaluateSystem/front/registerShowEnvaluateFrontAction.action" method="post" id="signupForm">
+    <div class="fieldContainer">
+    
+	   <div class="logo">		
+			<img src="../img/domain_logo.gif"/>
+		</div>    
+      <div class="formRow">
+      
+      
+        <div class="label">
+          <label for="name">用户名:</label>
+        </div>
+        
+        
+        <div class="field">
+          <input type="text" name="user.name" id="name" placeholder="建议使用邮箱注册"/>
+        </div>
+      </div>
+      
+      <div class="formRow">
+        <div class="label">
+          <label for="pass">密码:</label>
+        </div>
+        <div class="field">
+          <input type="password" name="user.password" id="pass" />
+        </div>
+      </div>
+      
+      
+      <div class="formRow">
+        <div class="label">
+          <label for="name">班级:</label>
+        </div>
+        <div class="field">
+          <input type="text" name="user.clazz" id="name" />
+        </div>
+      </div>
+       
+       <div class="formRow">
+        
+        <div class="label">
+          <label for="name">提示问题:</label>
+        </div>
+        
+        <div class="field">
+          <input type="text" name="user.passwordQuestion" id="name" />
+        </div>
+      </div>
+      
+      
+       <div class="formRow">
+       <div class="label">
+          <label for="name">问题答案:</label>
+        </div>
+        <div class="field">
+          <input type="text" name="user.passwordAnswer" id="name" />
+        </div>
+      </div>
+      
+    </div>
+    <!-- Closing fieldContainer -->
+    <div class ="d">
+   
+    <span class="signupButton">
+      <input type="submit" name="submit" id="submit" class="registation"/>
+      </span>
+      
+      
+       <span class="reset">
+      <input type="reset" name="reset" id="reset"/>
+      
+      
+      </span>
+    
+    </div>
+    </form>
+  </div>
+</body>
+</html>

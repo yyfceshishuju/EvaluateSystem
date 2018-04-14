@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.EvaluateDetailDAO">
+			<resultMap type="EvaluateDetail" id="evaluateDetailResult">
+				<result property="id" column="id"/>
+				<result property="userId" column="user_id"/>
+				<result property="scoreDetail" column="score_detail"/>
+				<result property="commendDetail" column="commend_detail"/>
+				<result property="totalScore" column="total_score"/>
+				<result property="evaluateId" column="evaluate_id"/>
+				<result property="createDate" column="create_date"/>
+			</resultMap>
+  <insert id="saveEvaluateDetail" parameterType="EvaluateDetail">
+  	INSERT INTO t_evaluate_detail 
+  		(id,user_id,score_detail,commend_detail,evaluate_id,total_score,create_date)
+  	VALUES
+  		(t_evaluate_detail_seq.nextval,#{userId},#{scoreDetail},#{commendDetail},#{evaluateId},#{totalScore},#{createDate})
+  </insert>
+  
+  
+  
+  <select id="queryEvaluateDetailByUserId" parameterType="java.lang.Integer" resultMap="evaluateDetailResult" resultType="EvaluateDetail">
+  	SELECT id,user_id,score_detail,commend_detail,evaluate_id,total_score,create_date FROM t_evaluate_detail
+  		WHERE user_id=#{userId}
+  </select>
+  
+   <select id="queryEvaluateDetailByUserIdOrderByCreateDate" parameterType="java.lang.Integer" resultMap="evaluateDetailResult" resultType="EvaluateDetail">
+  	SELECT e1.* from (SELECT commend_detail,user_id,create_date,rownum FROM t_evaluate_detail ORDER BY create_date,rownum desc )e1  WHERE e1.user_id=#{userId} and rownum=1
+  </select>
+  
+</mapper>

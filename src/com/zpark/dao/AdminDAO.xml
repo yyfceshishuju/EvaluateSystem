@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.AdminDAO"><!-- 所实现的接口的全限定名 -->
+	<!-- 自定义一个结果映射关系,映射表和实体,以及属性和列的对应关系 -->
+	<resultMap type="com.zpark.entity.Admin" id="adminResult">
+		<id property="id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="category" column="category" />
+		<result property="statu" column="statu" />
+		<result property="createDate" column="create_date" />
+		<!-- <association property="admin" javaType="com.zpark.entity.Admin" column="admin_id" 
+			select="com.zpark.dao.EvaluateItemDAO.queryAdminById"></association> -->
+	</resultMap>
+
+
+	<select id="queryAdminById" parameterType="Integer" resultMap="adminResult">
+		select
+		* from
+		t_admin where id = #{id}
+	</select>
+	<select id="queryAdminByUsername" parameterType="String" resultMap="adminResult">
+		select
+		* from
+		t_admin where username = #{username}
+	</select>
+
+
+
+</mapper>

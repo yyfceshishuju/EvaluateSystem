@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.EvaluateItemDAO"><!-- 所实现的接口的全限定名 -->
+	<!-- 自定义一个结果映射关系,映射表和实体,以及属性和列的对应关系 -->
+	<resultMap type="com.zpark.entity.EvaluateItem" id="EvaluateItemResult">
+		<id property="id" />
+		<result property="itemName" column="item_name" />
+		<result property="itemScore" column="item_score" />
+		<result property="itemCategory" column="item_category" />
+		<result property="createDate" column="create_date" />
+		<result property="statu" column="statu" />
+		<result property="adminId" column="admin_id" />
+		<association property="admin" javaType="com.zpark.entity.Admin"
+			column="admin_id" select="com.zpark.dao.EvaluateItemDAO.queryAdminById"></association>
+	</resultMap>
+
+	<resultMap type="com.zpark.entity.Admin" id="adminResult">
+		<id property="id" />
+		<result property="id" column="id" />
+	</resultMap>
+	<select id="queryAdminById" parameterType="Integer" resultMap="adminResult">
+		select *
+		from t_admin
+		where id = #{id}
+	</select>
+	<!-- id:实现类的方法名, parameterType:方法中的参数类型 , resultType:返回值类型 -->
+	<!-- 根据id查询对应的教评项 -->
+	<select id="queryEvaluateItemById" parameterType="Integer"
+		resultMap="EvaluateItemResult">
+		select * from t_evaluate_item where id = #{id}
+	</select>
+	<!-- 查询所有的教评项 ,分页查询-->
+	<select id="queryAllEvaluateItem" resultMap="EvaluateItemResult">
+		select * from
+		(select
+		id,item_name,item_score,item_category,create_date,statu,admin_id,rownum
+		r from
+		t_evaluate_item) where r &gt;= #{0} and r &lt;= #{1}
+	</select>
+	<!-- 增加教评项 -->
+	<insert id="saveEvaluateItem" parameterType="com.zpark.entity.EvaluateItem">
+		insert into t_evaluate_item
+		values(t_evaluate_item_seq.nextval
+		,#{itemName},#{itemScore},#{itemCategory},#{createDate},#{statu},#{adminId})
+	</insert>
+	<!-- 根据id将数据库中对应的evaluateItem删除 -->
+	<delete id="deleteEvaluateItem" parameterType="Integer"> delete from
+		t_evaluate_item where id = #{id}
+	</delete>
+	<!-- 修改教评项 -->
+	<update id="updateEvaluateItem" parameterType="com.zpark.entity.EvaluateItem"> update
+		t_evaluate_item set item_name = #{itemName}, item_score =
+		#{itemScore}, item_category = #{itemCategory}, create_date =
+		#{createDate}, statu = #{statu},admin_id=#{adminId} where
+		id
+		= #{id}
+	</update>
+	<!-- 查询测评项总共有多少条数据 -->
+	<select id="queryEvaluateItemMaxRows" resultType="java.lang.Integer">
+		select
+		count(*)
+		from t_evaluate_item
+	</select>
+	<!-- 查询所有的教评项 -->
+	<select id="queryAllEvaluateItems" resultMap="EvaluateItemResult">
+		select * from
+		t_evaluate_item
+	</select>
+</mapper>

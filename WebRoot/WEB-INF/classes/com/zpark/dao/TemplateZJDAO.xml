@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.TemplateZJDAO"><!-- 所实现的接口的全限定名 -->
+	<!-- 自定义一个结果映射关系,映射表和实体,以及属性和列的对应关系 -->
+	<resultMap type="com.zpark.entity.ZJTemplate" id="TemplateResult">
+		<id property="id" />
+		<result property="id" column="id" />
+		<result property="templateName" column="template_name" />
+		<result property="adminId" column="admin_id" />
+		<result property="createDate" column="create_date" />
+		<result property="statu" column="statu" />
+		<result property="isDefault" column="is_default" />
+<!-- 		<association property="admin" javaType="com.zpark.entity.Admin"
+			column="admin_id" select="com.zpark.dao.com.zpark.dao.TemplateDAO.queryAdminById"></association> -->
+	</resultMap>
+	<resultMap id="TemplateItemResult" type="com.zpark.entity.ZJTemplate"
+		extends="TemplateResult">
+		<collection property="zjevaluateItems" javaType="java.util.List"
+			select="com.zpark.dao.TemplateZJDAO.findEvaluateItems" column="id"></collection>
+	</resultMap>
+	<!-- <resultMap type="com.zpark.entity.Admin" id="adminResult">
+		<id property="id" />
+		<result property="id" column="id" />
+	</resultMap>
+	<select id="queryAdminById" parameterType="Integer" resultMap="adminResult">
+		select *
+		from t_admin
+		where id = #{id}
+	</select> -->
+	<select id="findEvaluateItems" parameterType="Integer"
+		resultMap="evaluateItemsResult">
+		select e.* from t_template_item_zj te left join t_evaluate_item_zj
+		e on te.evaluate_item_zj_id=e.id where te.template_zj_id = #{id}
+	</select>
+	<resultMap id="evaluateItemsResult" type="com.zpark.entity.ZJEvaluateItem">
+		<id property="id" />
+		<result property="id" column="evaluate_item__zj_id"></result>
+		<result property="id" column="template_zj_id"></result>
+		<result property="id"></result>
+		<result property="itemName" column="item_name" />
+		<result property="itemScore" column="item_score" />
+		<result property="itemCategory" column="item_category" />
+		<result property="createDate" column="create_date" />
+		<result property="statu" column="statu" />
+	</resultMap>
+	<resultMap type="com.zpark.entity.ZJTemplateItemLink" id="TemplateItemLinkResult">
+		<id property="id" />
+		<result property="id" />
+		<result property="evaluateItemZjId" column="evaluate_item_zj_id" />
+		<result property="zjtemplateZjId" column="template_zj_id" />
+	</resultMap>
+
+
+	<select id="queryAllZJTemplate" resultMap="TemplateItemResult">
+		select * from (select
+		id,template_name,admin_id,create_date,statu,is_default,rownum r from
+		t_template_zj)where r &gt;=#{0} and r &lt;=#{1}
+	</select>
+	<!-- 根据id查询对应的Template -->
+	<select id="queryZJTemplateById" parameterType="Integer"
+		resultMap="TemplateItemResult">
+		select * from t_template_zj where id=#{id}
+	</select>
+	
+	<!-- 获得当前序列号 -->
+	<select id="queryId" resultType="Integer">
+		select
+		t_template_zj_seq.nextval
+		from dual
+	</select>
+
+	<!-- 插入一个模板 -->
+	<insert id="saveZJTemplate" parameterType="com.zpark.entity.ZJTemplate">
+		insert into
+		t_template_zj
+		values(#{id},#{templateName},#{adminId},#{createDate},#{statu},#{isDefault})
+	</insert>
+	<!-- 维护模板和评测项之间的关系关系表 -->
+	<insert id="saveZJRelativity" parameterType="com.zpark.entity.ZJTemplateItemLink">
+		insert into
+		t_template_item_zj                                          
+		values(t_template_item_zj_seq.nextval,#{evaluateItemZjId},#{templateZjId})
+	</insert>
+	<!-- 删除 -->
+	<delete id="deleteZJTemplate" parameterType="Integer"> delete from
+		t_template_zj
+		where id=#{id}
+	</delete>
+	<!-- 修改 -->
+	<update id="updateZJTemplate" parameterType="com.zpark.entity.ZJTemplate">
+		update
+		t_template_zj
+		set
+		template_name = #{templateName},
+		admin_id = #{adminId},
+		create_date =
+		#{createDate},
+		statu = #{statu},
+		is_default = #{isDefault}
+		where id=#{id}
+	</update>
+	<!-- 查询出总共有多少条模板 -->
+	<select id="queryZJTemplateMaxRows" resultType="java.lang.Integer">
+		select count(*) from t_template_zj
+	</select>
+</mapper>

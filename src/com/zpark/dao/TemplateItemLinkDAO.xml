@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.TemplateItemLinkDAO"><!-- 所实现的接口的全限定名 -->
+	<!-- 自定义一个结果映射关系,映射表和实体,以及属性和列的对应关系 -->
+	<resultMap type="com.zpark.entity.TemplateItemLink" id="TemplateItemLinkResult">
+		<id property="id" />
+		<result property="id" />
+		<result property="evaluateItemId" column="evaluate_item_id" />
+		<result property="templateId" column="template_id" />
+	</resultMap>
+	<select id="queryByItemId" parameterType="Integer"
+		resultMap="TemplateItemLinkResult">
+		select
+		* from
+		t_template_item where evaluate_item_id =
+		#{evaluateItemId}
+	</select>
+	<!-- <select id="queryByTemplateId" parameterType="Integer" resultMap="TemplateItemLinkResult"> 
+		select * from t_template_item where template_id = #{templateId} </select> -->
+	<delete id="deleteByTemplateId" parameterType="Integer">
+		delete from t_template_item where template_id=#{templateId}
+	</delete>
+</mapper>

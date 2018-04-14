@@ -1,0 +1,271 @@
+* { /* Resetting the default styles of the page */
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	overflow: auto;
+}
+
+.logo {
+	margin-bottom: 10px;
+}
+
+body { /* Setting default text color, background and a font stack */
+	font-size: 0.825em;
+	color: #cff909c;
+	font-family: 微软雅黑;
+	background: url("../img/bgB.png") repeat-x #222222;
+}
+
+#backgrondb {
+	padding-top: 30px;
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+}
+
+#carbonForm { /* The main form container */
+	background-color: #c9c9d9;
+	border: 1px solid #080808;
+	margin: 1px auto;
+	padding: 20px;
+	/* 1000 */
+	height: 150px;
+	/* 700 */
+	width: 500px;
+	-moz-box-shadow: 0 0 1px #444 inset;
+	-webkit-box-shadow: 0 0 1px #444 inset;
+	box-shadow: 0 0 1px #444 inset;
+}
+
+#carbonForm h1 { /* The form heading */
+	font-family: 微软雅黑, Myriad Pro, Arial, Helvetica, sans-serif;
+	color: #414950;
+	font-size: 60px;
+	font-weight: normal;
+	padding: 0 0 30px 10px;
+	text-align: left;
+}
+
+.fieldContainer {
+	display: none;
+	background-color: #A7A7BC;
+	border: 1px solid #0E0E0E;
+	-moz-box-shadow: 0 0 20px #C8D6E3 inset;
+	-webkit-box-shadow: 0 0 20px #C8D6E3 inset;
+	box-shadow: 0 0 20px #C8D6E3 inset;
+}
+
+#carbonForm,.fieldContainer,.errorTip { /* Rounding the divs at once */
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+}
+
+.formRow { /* 内部div */
+	font-size: 16px;
+	padding: 10px;
+	position: relative;
+}
+
+.label {
+	float: left;
+	padding: 0 20px 0 0;
+	text-align: right;
+	width: 70px;
+}
+
+label {
+	font-family: 微软雅黑, Myriad Pro, Arial, Helvetica, sans-serif;
+	font-size: 35px;
+	letter-spacing: 1px;
+	line-height: 35px;
+}
+
+.field {
+	float: left;
+}
+
+.field input { /* The text boxes */
+	border: 1px solid white;
+	color: #666666;
+	font-family: 微软雅黑, Helvetica, sans-serif;
+	font-size: 16px;
+	padding: 4px 5px;
+	background: url("../img/box_bg.png") repeat-x scroll left top #FFFFFF;
+	outline: none;
+	/* Preventing the default Safari and Chrome text box highlight */
+}
+
+.signupButton { /* The submit button container */
+	text-align: center;
+	padding: 30px 0 10px;
+}
+
+.d {
+	margin-bottom: 20px;
+}
+
+#reset {
+	display: none;
+	border: 1px solid #f4f4f4;
+	cursor: pointer;
+	height: 40px;
+	text-indent: -9999px;
+	_text-indent: 0;
+	text-transform: uppercase;
+	width: 110px;
+	margin-left: 30px;
+	background: url("../img/reset.png") no-repeat center center #d0ecfd;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.submit {
+	border: 1px solid #f4f4f4;
+	cursor: pointer;
+	height: 40px;
+	text-indent: -9999px;
+	_text-indent: 0;
+	text-transform: uppercase;
+	width: 110px;
+	background: url("../img/submit.jpg") no-repeat center center #d0ecfd;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	margin-left: 110px;
+}
+
+.registation {
+	display: none;
+	border: 1px solid #f4f4f4;
+	cursor: pointer;
+	height: 40px;
+	text-indent: -9999px;
+	_text-indent: 0;
+	text-transform: uppercase;
+	width: 110px;
+	background: url("../img/submit1.png") no-repeat center center #d0ecfd;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	margin-left: 200px;
+}
+
+#submit.active {
+	/* Marking the submit button as active adds the preloader gif as background */
+	background-image: url("../img/preloader.gif");
+}
+
+#submit:hover {
+	background-color: #dcf2ff;
+	border: 1px solid white;
+}
+
+#reset.active {
+	/* Marking the submit button as active adds the preloader gif as background */
+	background-image: url("../img/preloader.gif");
+}
+
+#reset:hover {
+	background-color: #dcf2ff;
+	border: 1px solid white;
+}
+
+input:hover,input:focus {
+	-moz-box-shadow: 0 0 8px lightblue;
+	-webkit-box-shadow: 0 0 8px lightblue;
+	box-shadow: 0 0 8px lightblue;
+}
+
+.errorTip { /* The error divs */
+	background-color: #970F08;
+	color: white;
+	font-size: 10px;
+	height: 26px;
+	letter-spacing: 0.4px;
+	margin-left: 20px;
+	padding: 5px 0 5px 10px;
+	position: absolute;
+	text-shadow: 1px 1px 0 #555555;
+	width: 200px;
+	right: -130px;
+}
+
+/* The styles below are only necessary for the styling of the demo page: */
+#footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 10px;
+	color: #eee;
+	text-align: center;
+	font-weight: normal;
+	font-style: italic;
+}
+
+a,a:visited {
+	margin-left: 35px;
+	color: #0196e3;
+	text-decoration: none;
+	outline: none;
+}
+
+.passw {
+	font-size: 11px;
+}
+
+.evaluateTableHead {
+	font-size: 15px;
+}
+
+.evaluateTableHead input {
+	border: 1px solid white;
+	color: #666666;
+	font-family: 微软雅黑, Helvetica, sans-serif;
+	font-size: 16px;
+	padding: 4px 5px;
+	border: 1px solid white;
+	color: #666666;
+	font-family: 微软雅黑, Helvetica, sans-serif;
+	font-size: 16px;
+	padding: 4px 5px;
+	background: none;
+	width: 70px;
+	border: none;
+}
+
+.evaluateTableHead button {
+	border: 1px solid #f4f4f4;
+	cursor: pointer;
+	height: 30px;
+	width: 70px;
+	margin-left: 30px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #D0ECFD;
+	font-size: 15px;
+	font-family: 微软雅黑;
+}
+
+/* a:hover{
+	text-decoration:underline;
+} */
+.textarea1 {
+	background-color: #C9C9D9;
+	resize: none;
+}
+
+.textarea2 {
+	background-color: #CAD8E5;
+	resize: none;
+}
+
+.inputTypes {
+	background-color: #c9c9d9;
+	border: none;
+	border-bottom: solid 1px black;
+	width: 70px;
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.AssistantDAO">
+	<resultMap type="Assistant" id="assistantResult">
+		<result property="id" column="id" />
+		<result property="assistantName" column="assistant_name" />
+		<result property="username" />
+		<result property="password" />
+	</resultMap>
+	<resultMap type="ZJEvaluate" id="zjevaluateResult">
+		<id property="id" column="id" />
+		<result property="subject" column="subject" />
+		<result property="clazzCount" column="clazz_count" />
+		<result property="realCount" column="real_count" />
+		<result property="totalScore" column="total_score" />
+		<result property="scoreDetail" column="score_detail" />
+		<result property="createDate" column="create_date" />
+		<result property="endDate" column="end_date" />
+		<result property="commendDetail" column="commend_detail" />
+		<result property="clazz" column="clazz" />
+		<result property="beginDate" column="begin_date" />
+		<result property="statu" column="statu" />
+		<association property="assistant" javaType="Assistant"
+			column="assistant_id" select="com.zpark.dao.TeacherDAO.queryAssistantById">
+		</association>
+	</resultMap>
+
+	<select id="queryAssistantById" resultType="Assistant"
+		resultMap="assistantResult" parameterType="int">
+		SELECT
+		id,assistant_name,username,password FROM t_assistant
+		WHERE id=#{id}
+	</select>
+	<select id="queryAssistantByUsername" resultType="Assistant"
+		resultMap="assistantResult" parameterType="String">
+		select * from t_assistant
+		where username=#{username}
+	</select>
+
+	<update id="updateAssistant" parameterType="Assistant">
+		update t_assistant
+		set
+		assistant_name=#{assistantName},username=#{username},password=#{password}
+		where id=#{id}
+	</update>
+</mapper>

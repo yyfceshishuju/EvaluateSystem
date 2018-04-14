@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="bg" extends="easyUI" namespace="/bgTemplate">
+		<action name="EvaluateItem_*" class="com.zpark.action.BGAction"
+			method="{1}">
+			<result name="createEvaluateItemSuccess">/bgTemplate/evaluateItemManagePage.jsp
+			</result>
+			<result name="showEvaluateItems" type="easyUI">
+				<param name="property">evaluateItems</param>
+			</result>
+			<result name="removeEvaluateItem">/bgTemplate/evaluateItemManagePage.jsp
+			</result>
+			<result name="showEvaluateItemById">/bgTemplate/evaluateItemModifyPage.jsp
+			</result>
+			<result name="modifyEvaluateItem">/bgTemplate/evaluateItemManagePage.jsp
+			</result>
+		</action>
+		<action name="Admin_*" class="com.zpark.action.BGAdminAction"
+			method="{1}">
+			<result name="loginSuccess" type="redirect">/full.jsp</result>
+			<result name="loginFail">/bgTemplate/loginError.jsp</result>
+			<result name="teacherLoginSuccess" type="redirect">/teacherFull.jsp</result>
+			<result name="assistantLoginSuccess" type="redirect">/assistantFull.jsp</result>
+			<result name="teacherModifyPassword" type="redirect">/bgTemplate/teacherPasswordModifySuccess.jsp</result>
+			<result name="assistantModifyPasswordFail">/bgTemplate/assistantPasswordModifyError.jsp</result>
+			<result name="assistantModifyPassword" type="redirect">/bgTemplate/assistantPasswordModifySuccess.jsp</result>
+			<result name="teacherModifyPasswordFail">/bgTemplate/assistantPasswordModifyError.jsp</result>
+			
+		</action>
+		<action name="Template_*" class="com.zpark.action.BGTemplateAction"
+			method="{1}">
+			<result name="showTemplates" type="easyUI">
+				<param name="property">templates</param>
+			</result>
+			<result name="createTemplateSuccess">/bgTemplate/templateManagePage.jsp
+			</result>
+			<result name="removeTemplate">/bgTemplate/templateManagePage.jsp
+			</result>
+			<result name="SetTemplateDefault">/bgTemplate/templateManagePage.jsp
+			</result>
+			<result name="setTemplateUseable">/bgTemplate/templateManagePage.jsp</result>
+			<result name="frozenTemplate">/bgTemplate/templateManagePage.jsp</result>
+			<result name="showEvaluateItemsForTemplate">/bgTemplate/templateCreatePage.jsp</result>
+			
+		</action>
+		<action name="EvaluateItemZJ_*" class="com.zpark.action.BGEvaluateZJAction"
+			method="{1}">
+			<result name="createZJEvaluateItem">/bgTemplate/evaluateItemManageZJPage.jsp
+			</result>
+			<result name="showZJEvaluateItems" type="easyUI">
+				<param name="property">zJevaluateItems</param>
+			</result>
+			<result name="removeZJEvaluateItem">/bgTemplate/evaluateItemManageZJPage.jsp
+			</result>
+			<result name="showZJEvaluateItemById">/bgTemplate/evaluateItemModifyZJPage.jsp
+			</result>
+			<result name="modifyZJEvaluateItem">/bgTemplate/evaluateItemManageZJPage.jsp
+			</result>
+		</action>
+		<action name="TemplateZJ_*" class="com.zpark.action.BGTemplateZJAction"
+			method="{1}">
+			<result name="showTemplates" type="easyUI">
+				<param name="property">templates</param>
+			</result>
+			<result name="createTemplateSuccess">/bgTemplate/templateManageZJPage.jsp
+			</result>
+			<result name="removeTemplate">/bgTemplate/templateManageZJPage.jsp
+			</result>
+			<result name="SetTemplateDefault">/bgTemplate/templateManageZJPage.jsp
+			</result>
+			<result name="setTemplateUseable">/bgTemplate/templateManageZJPage.jsp</result>
+			<result name="frozenTemplate">/bgTemplate/templateManageZJPage.jsp</result>
+			<result name="showEvaluateItemsForTemplate">/bgTemplate/templateCreateZJPage.jsp</result>
+		</action>
+	</package>
+</struts>    

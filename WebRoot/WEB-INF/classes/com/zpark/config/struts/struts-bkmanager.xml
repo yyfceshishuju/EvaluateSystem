@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd"><struts>
+
+<!-- 
+
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd"
+
+	 <package name="manager" extends="struts-default" namespace="/manager">
+		<action name="manager_*" class="adminAction" method="{1}">
+			<result name="loginOk" type="redirectAction">
+				<param name="namespace">/evaluate</param>
+				<param name="actionName">evaluate_showAllEvaluate</param>
+			</result>
+		</action>
+	</package>	
+	 -->
+</struts>    

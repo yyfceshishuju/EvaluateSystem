@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zpark.dao.ReportDataDAO">
+	
+	<insert id="saveUsers" parameterType="User">
+	 insert into t_user(id,name,password,password_question,password_answer,create_date,clazz,statu,ip)   
+   	 values 
+	  (#{id},#{name},#{password},#{passwordQuestion},#{passwordAnswer},#{createDate},#{clazz},#{statu},#{ip}) 
+	</insert>
+	<insert id="saveEvaluates" parameterType="Evaluate">
+		insert into t_evaluate(id,subject,clazz_count,real_count,teacher_id,total_score,score_detail,create_date,end_date,template_id,commend_detail,admin_id,clazz,begin_date,statu)
+		values(#{id},#{subject,jdbcType=VARCHAR},#{clazzCount,jdbcType=VARCHAR},#{realCount,jdbcType=NUMERIC},#{teacher.id,jdbcType=NUMERIC},
+		#{totalScore,jdbcType=NUMERIC},#{scoreDetail,jdbcType=VARCHAR},#{createDate,jdbcType=DATE},#{endDate,jdbcType=DATE},#{template.id,jdbcType=NUMERIC},
+		#{commendDetail,jdbcType=VARCHAR},#{admin.id,jdbcType=NUMERIC},#{clazz,jdbcType=VARCHAR},#{beginDate,jdbcType=DATE},#{statu,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="saveEvaluateDetails" parameterType="EvaluateDetail">	
+		INSERT INTO t_evaluate_detail 
+  		(id,user_id,score_detail,commend_detail,evaluate_id,total_score,create_date)
+  		VALUES
+  		(#{id},#{user.id},#{scoreDetail},#{commendDetail},#{evaluate.id},#{totalScore},#{createDate})
+	</insert>
+	
+	<insert id="saveEvaluatesZJ" parameterType="ZJEvaluate">
+		insert into t_evaluate_zj(id,subject,clazz_count,real_count,assistant_id,total_score,score_detail,create_date,end_date,template_zj_id,commend_detail,admin_id,clazz,begin_date,statu)
+		values(#{id},#{subject,jdbcType=VARCHAR},#{clazzCount,jdbcType=VARCHAR},#{realCount,jdbcType=NUMERIC},#{assistant.id,jdbcType=NUMERIC},
+		#{totalScore,jdbcType=NUMERIC},#{scoreDetail,jdbcType=VARCHAR},#{createDate,jdbcType=DATE},#{endDate,jdbcType=DATE},#{zjTemplate.id,jdbcType=NUMERIC},
+		#{commendDetail,jdbcType=NUMERIC},#{admin.id,jdbcType=NUMERIC},#{clazz,jdbcType=VARCHAR},#{beginDate,jdbcType=DATE},#{statu,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="saveEvaluateDetailsZJ" parameterType="ZJEvaluateDetail">
+		INSERT INTO t_evaluate_detail_zj 
+  		(id,user_id,score_detail,commend_detail,evaluate_ZJ_ID,total_score,create_date)
+  		VALUES
+  		(#{id},#{user.id},#{scoreDetail},#{commendDetail},#{zjevaluate.id},#{totalScore},#{createDate})
+	</insert>
+	</mapper>
